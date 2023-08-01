@@ -36,26 +36,24 @@ public class Activity8 {
         System.out.println("The user is on the home page");
     }
     @Test
-    public void AdditionalInfo() {
+    public void AdditionalInfo() throws InterruptedException{
         //sales selection
         driver.findElement(By.xpath("//*[@id=\"grouptab_0\"]")).click();
         // Accounts selection
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.findElement(By.xpath("//*[@id=\"moduleTab_9_Accounts\"]")).click();
+        String validSalesWindow = driver.findElement(By.className("recent_h3")).getText();
+        //Assertions
+        Assert.assertEquals(validSalesWindow, "Recently Viewed");
+        System.out.println("New Window Opened, Confirmation text is :" + validSalesWindow);
+        Thread.sleep(2000);
         //Find the table on the page and print the names of the first 5 odd-numbered rows
         //of the table to the console.
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"MassUpdate\"]/div[3]/table")));
-        WebElement table = driver.findElement(By.xpath("//*[@id=\"MassUpdate\"]/div[3]/table"));
-        List<WebElement> rows = driver.findElements(By.xpath("//table[contains(@class, 'list view table')]/tbody/tr"));
-        System.out.println("Number of rows: " + rows.size());
-        List<WebElement> cols = driver.findElements(By.xpath("//table[contains(@class, 'list view table')]/tbody/tr[1]/td"));
-        System.out.println("Number of columns: " + cols.size());
-        for(int i=1; i<=rows.size(); i++) {
-            for(int j=1; j<=cols.size(); j++){
-                String Text = driver.findElement(By.xpath(
-                        "//*[@id=\"MassUpdate\"]/div[3]/table/tbody/tr[i]/td[j])")).getText();
-                System.out.println(Text);
-            }
-            }
+        String h2Text = driver.findElement(By.className("module-title-text")).getText();
+        System.out.println("header 2 is : " + h2Text);
+        for(int i=1;i<=13;i=i+2){
+            WebElement rowdata = driver.findElement(By.xpath("//table/tbody/tr["+i+"]/td[3]/b"));
+            System.out.println(rowdata.getText());}
     }
         @AfterTest
         public void afterMethod(){
